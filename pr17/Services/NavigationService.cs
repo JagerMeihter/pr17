@@ -9,4 +9,5 @@ namespace pr17.Services
     internal class NavigationService
     {
     }
+
 }
