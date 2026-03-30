@@ -1,28 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using pr17;
+using pr17.Services;
+using pr17.Views;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace pr17.Views
+namespace pr17
 {
-    /// <summary>
-    /// Логика взаимодействия для StartPage.xaml
-    /// </summary>
     public partial class StartPage : Page
     {
         public StartPage()
         {
             InitializeComponent();
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+
+            if (loginWindow.ShowDialog() == true)
+            {
+                // После успешного входа можно сразу перейти на нужную страницу в зависимости от роли
+                if (AuthService.CurrentUser != null)
+                {
+                    switch (AuthService.CurrentUser.Role)
+                    {
+                        case UserRole.Client:
+                            NavigationService.Navigate(new AccountPage());
+                            break;
+                        case UserRole.Master:
+                            NavigationService.Navigate(new MasterPage());
+                            break;
+                        case UserRole.Manager:
+                            NavigationService.Navigate(new ManagerPage());
+                            break;
+                        case UserRole.Administrator:
+                            NavigationService.Navigate(new AdminPage());
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void BtnShop_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ProductsPage());
         }
     }
 }
