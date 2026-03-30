@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DiscountConverter.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\CartService.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -155,7 +156,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Resources\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
