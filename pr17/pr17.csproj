@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CheckoutWindow.xaml.cs">
+      <DependentUpon>CheckoutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\DiscountConverter.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\CartService.cs" />
@@ -83,6 +86,10 @@
     <Compile Include="Views\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="CheckoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
