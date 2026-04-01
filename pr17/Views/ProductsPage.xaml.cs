@@ -11,7 +11,7 @@ namespace pr17
     {
         private List<Product> allProducts = new List<Product>();
 
-        public ProductsPage()
+        public ProductsPage() 
         {
             InitializeComponent();
             LoadTestProducts();

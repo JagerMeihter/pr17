@@ -34,17 +34,17 @@ namespace pr17
                 new
                 {
                     Id = 101,
-                    Client = new User { FullName = "Иван Клиент" },
+                    Client = new User { FullName = "Трубоёб ВАСИЛИЙ" },
                     ServiceType = new ServiceType { Name = "Маникюр классический" },
                     DateTime = DateTime.Now.AddHours(3),
-                    Comment = "Просит сделать дизайн звёздное небо",
+                    Comment = "гителр цциагур91122 семь восемь семь шесть шесть семь ",
                     Status = AppointmentStatus.Scheduled
                 },
                 new
                 {
                     Id = 102,
-                    Client = new User { FullName = "Мария Смирнова" },
-                    ServiceType = new ServiceType { Name = "Окрашивание волос" },
+                    Client = new User { FullName = "Хуяковна Хераковна" },
+                    ServiceType = new ServiceType { Name = "Окрашивание волос (на попе)" },
                     DateTime = DateTime.Now.AddHours(6),
                     Comment = "",
                     Status = AppointmentStatus.Scheduled

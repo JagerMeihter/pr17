@@ -47,14 +47,24 @@ namespace pr17.Services
             },
             new User
             {
-                Id = 2, FullName = "Анна Звёздная", Phone = "+79991112233", Login = "master",
+                Id = 2, FullName = "Гитлер Гитлер", Phone = "+79991112233", Login = "master",
                 PasswordHash = HashPassword("master123"), Role = UserRole.Master
             },
             new User
             {
-                Id = 3, FullName = "Иван Клиент", Phone = "+79995556677", Login = "client",
+                Id = 3, FullName = "Дрель ВИТАЛЯ", Phone = "+79995556677", Login = "client",
                 PasswordHash = HashPassword("client123"), Role = UserRole.Client
-            }
+            },
+            new User
+                {
+                    Id = 4,
+                    FullName = "Супер Босс Говна Владимир",
+                    Phone = "+7 (999) 777-88-99",
+                    Login = "manager",
+                    PasswordHash = HashPassword("manager123"),
+                    Role = UserRole.Manager,
+                    IsActive = true
+                }
         };
         }
     }

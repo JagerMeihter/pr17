@@ -32,7 +32,7 @@ namespace pr17
                 new User
                 {
                     Id = 2,
-                    FullName = "Анна Звёздная",
+                    FullName = "Трубоёб ВАСИЛИЙ",
                     Login = "master",
                     Phone = "+7 (999) 111-22-33",
                     Role = UserRole.Master,
@@ -41,7 +41,7 @@ namespace pr17
                 new User
                 {
                     Id = 3,
-                    FullName = "Иван Клиент",
+                    FullName = "Дрель ВИТАЛЯ",
                     Login = "client",
                     Phone = "+7 (999) 555-66-77",
                     Role = UserRole.Client,
@@ -50,7 +50,7 @@ namespace pr17
                 new User
                 {
                     Id = 4,
-                    FullName = "Мария Менеджер",
+                    FullName = "Гитлер Гитлер",
                     Login = "manager",
                     Phone = "+7 (999) 777-88-99",
                     Role = UserRole.Manager,

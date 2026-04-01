@@ -21,15 +21,15 @@ namespace pr17
             {
                 new
                 {
-                    Client = new User { FullName = "Иван Клиент" },
-                    Master = new User { FullName = "Анна Звёздная" },
+                    Client = new User { FullName = "Дрель ВИТАЛЯ" },
+                    Master = new User { FullName = "Трубоёб ВАСИЛИЙ" },
                     ServiceType = new ServiceType { Name = "Маникюр" },
                     DateTime = DateTime.Now.AddHours(4)
                 },
                 new
                 {
-                    Client = new User { FullName = "Мария Смирнова" },
-                    Master = new User { FullName = "Анна Звёздная" },
+                    Client = new User { FullName = "Хуяковна Хераковна" },
+                    Master = new User { FullName = "Трубоёб ВАСИЛИЙ" },
                     ServiceType = new ServiceType { Name = "Окрашивание" },
                     DateTime = DateTime.Now.AddHours(7)
                 }
@@ -44,8 +44,8 @@ namespace pr17
             lvOrders.Items.Clear();
             var testOrders = new[]
             {
-                new { Client = new User { FullName = "Иван Клиент" }, OrderDate = DateTime.Now.AddDays(-2) },
-                new { Client = new User { FullName = "Елена Петрова" }, OrderDate = DateTime.Now.AddDays(-5) }
+                new { Client = new User { FullName = "Дрель ВИТАЛЯ" }, OrderDate = DateTime.Now.AddDays(-2) },
+                new { Client = new User { FullName = "ГИТЛЕР ГИТЛЕР" }, OrderDate = DateTime.Now.AddDays(-5) }
             };
 
             foreach (var order in testOrders)

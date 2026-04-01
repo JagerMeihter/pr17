@@ -34,12 +34,12 @@ namespace pr17
             var testAppointments = new[]
             {
                 new { ServiceType = new ServiceType { Name = "Маникюр" },
-                      Master = new User { FullName = "Анна Звёздная" },
+                      Master = new User { FullName = "Трубоёб ВАСИЛИЙ" },
                       DateTime = DateTime.Now.AddDays(2),
                       Status = "Запланирована" },
 
                 new { ServiceType = new ServiceType { Name = "Окрашивание волос" },
-                      Master = new User { FullName = "Анна Звёздная" },
+                      Master = new User { FullName = "Трубоёб ВАСИЛИЙ" },
                       DateTime = DateTime.Now.AddDays(5),
                       Status = "Запланирована" }
             };

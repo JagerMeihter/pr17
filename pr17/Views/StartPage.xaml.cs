@@ -17,6 +17,7 @@ namespace pr17
 
             if (loginWindow.ShowDialog() == true)
             {
+                // После успешного входа переходим на нужную страницу в зависимости от роли
                 if (AuthService.CurrentUser != null)
                 {
                     switch (AuthService.CurrentUser.Role)
@@ -35,6 +36,10 @@ namespace pr17
 
                         case UserRole.Administrator:
                             NavigationService.Navigate(new AdminPage());
+                            break;
+
+                        default:
+                            NavigationService.Navigate(new StartPage()); // на всякий случай
                             break;
                     }
                 }

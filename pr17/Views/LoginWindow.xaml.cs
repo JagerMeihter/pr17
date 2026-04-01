@@ -15,7 +15,7 @@ namespace pr17
         {
             if (string.IsNullOrWhiteSpace(txtLogin.Text) || string.IsNullOrWhiteSpace(txtPassword.Password))
             {
-                MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("ты чо елан...!", "дебил блять", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
