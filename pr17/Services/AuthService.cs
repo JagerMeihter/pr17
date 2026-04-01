@@ -33,7 +33,7 @@ namespace pr17.Services
             }
             return false;
         }
-
+        
         public static void Logout() { CurrentUser = null; }
 
         private static List<User> GetTestUsers()
