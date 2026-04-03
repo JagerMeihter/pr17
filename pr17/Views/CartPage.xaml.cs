@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
+using pr17.Models;
 namespace pr17
 {
     public partial class CartPage : Page

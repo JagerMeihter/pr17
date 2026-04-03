@@ -1,6 +1,7 @@
 ﻿using pr17.Services;
 using System.Windows;
 using System.Windows.Controls;
+using pr17.Models;
 
 namespace pr17
 {

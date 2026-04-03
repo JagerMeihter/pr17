@@ -1,71 +1,134 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+using System.Linq;
+using pr17.Models;
 
-
-namespace pr17.Services
+namespace pr17
 {
     public static class AuthService
     {
         public static User CurrentUser { get; private set; }
 
+        /// <summary>
+        /// Проверка логина и пароля через базу PostgreSQL
+        /// </summary>
+        public static bool Login(string login, string password)
+        {
+            try
+            {
+                using (var db = new AppDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Login == login && u.IsActive);
+
+                    if (user == null)
+                        return false;
+
+                    // Сравниваем хэш пароля
+                    if (VerifyPassword(password, user.PasswordHash))
+                    {
+                        CurrentUser = user;
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Ошибка подключения к базе:\n{ex.Message}",
+                    "Ошибка", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+        }
+
+        public static void Logout()
+        {
+            CurrentUser = null;
+        }
+
+        /// <summary>
+        /// Проверка пароля (SHA256)
+        /// </summary>
+        private static bool VerifyPassword(string password, string storedHash)
+        {
+            string hashedInput = HashPassword(password);
+            return hashedInput == storedHash;
+        }
+
+        /// <summary>
+        /// Хэширование пароля с помощью SHA256
+        /// </summary>
         private static string HashPassword(string password)
         {
-            using (SHA256 sha = SHA256.Create())
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
-                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                byte[] bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return BitConverter.ToString(bytes).Replace("-", "").ToLower();
             }
         }
 
-        public static bool Login(string login, string password)
+        /// <summary>
+        /// Создание тестовых пользователей (вызывать один раз при первом запуске)
+        /// </summary>
+        public static void SeedTestUsers()
         {
-            // Тестовые пользователи (в реальности можно хранить в List<User>)
-            var users = GetTestUsers();
-            foreach (var u in users)
+            try
             {
-                if (u.Login == login && u.PasswordHash == HashPassword(password) && u.IsActive)
+                using (var db = new AppDbContext())
                 {
-                    CurrentUser = u;
-                    return true;
+                    if (db.Users.Any()) return; // если пользователи уже есть — выходим
+
+                    var testUsers = new[]
+                    {
+                        new User
+                        {
+                            FullName = "Администратор",
+                            Phone = "+7 (999) 123-45-67",
+                            Login = "admin",
+                            PasswordHash = HashPassword("admin123"),
+                            Role = UserRole.Administrator,
+                            IsActive = true
+                        },
+                        new User
+                        {
+                            FullName = "Анна Звёздная",
+                            Phone = "+7 (999) 111-22-33",
+                            Login = "master",
+                            PasswordHash = HashPassword("master123"),
+                            Role = UserRole.Master,
+                            IsActive = true
+                        },
+                        new User
+                        {
+                            FullName = "Иван Клиент",
+                            Phone = "+7 (999) 555-66-77",
+                            Login = "client",
+                            PasswordHash = HashPassword("client123"),
+                            Role = UserRole.Client,
+                            IsActive = true
+                        },
+                        new User
+                        {
+                            FullName = "Мария Менеджер",
+                            Phone = "+7 (999) 777-88-99",
+                            Login = "manager",
+                            PasswordHash = HashPassword("manager123"),
+                            Role = UserRole.Manager,
+                            IsActive = true
+                        }
+                    };
+
+                    db.Users.AddRange(testUsers);
+                    db.SaveChanges();
+
+                    System.Windows.MessageBox.Show("Тестовые пользователи успешно добавлены в базу!",
+                        "Инициализация", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 }
             }
-            return false;
-        }
-        
-        public static void Logout() { CurrentUser = null; }
-
-        private static List<User> GetTestUsers()
-        {
-            return new List<User>
-        {
-            new User
+            catch (Exception ex)
             {
-                Id = 1, FullName = "Администратор", Phone = "+79991234567", Login = "admin",
-                PasswordHash = HashPassword("admin123"), Role = UserRole.Administrator
-            },
-            new User
-            {
-                Id = 2, FullName = "Гитлер Гитлер", Phone = "+79991112233", Login = "master",
-                PasswordHash = HashPassword("master123"), Role = UserRole.Master
-            },
-            new User
-            {
-                Id = 3, FullName = "Дрель ВИТАЛЯ", Phone = "+79995556677", Login = "client",
-                PasswordHash = HashPassword("client123"), Role = UserRole.Client
-            },
-            new User
-                {
-                    Id = 4,
-                    FullName = "Супер Босс Говна Владимир",
-                    Phone = "+7 (999) 777-88-99",
-                    Login = "manager",
-                    PasswordHash = HashPassword("manager123"),
-                    Role = UserRole.Manager,
-                    IsActive = true
-                }
-        };
+                System.Windows.MessageBox.Show($"Ошибка при добавлении тестовых пользователей:\n{ex.Message}",
+                    "Ошибка", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using pr17.Services;
+﻿using pr17.Models;
+using pr17.Services;
 using System.Windows;
 
 namespace pr17
@@ -10,6 +11,10 @@ namespace pr17
             InitializeComponent();
             NavigationService.MainFrame = MainFrame;
 
+            // Инициализация базы данных при запуске
+            AuthService.SeedTestUsers();
+
+            // Запуск с главной страницы
             MainFrame.Navigate(new StartPage());
 
             UpdateTopPanel();
