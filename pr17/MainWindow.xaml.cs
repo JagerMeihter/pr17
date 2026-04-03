@@ -11,10 +11,9 @@ namespace pr17
             InitializeComponent();
             NavigationService.MainFrame = MainFrame;
 
-            // Инициализация базы данных при запуске
-            AuthService.SeedTestUsers();
+            // Временно отключаем Seed, чтобы приложение запустилось
+            // AuthService.SeedTestUsers();
 
-            // Запуск с главной страницы
             MainFrame.Navigate(new StartPage());
 
             UpdateTopPanel();
@@ -25,37 +24,22 @@ namespace pr17
             bool isLoggedIn = AuthService.CurrentUser != null;
 
             btnCart.Visibility = isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
-            btnAccount.Visibility = (isLoggedIn && AuthService.CurrentUser.Role == UserRole.Client)
+            btnAccount.Visibility = (isLoggedIn && AuthService.CurrentUser?.Role == UserRole.Client)
                                   ? Visibility.Visible
                                   : Visibility.Collapsed;
 
             btnCart.Content = $"Корзина ({CartService.Items.Count})";
         }
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => NavigationService.GoBack();
 
-        private void BtnHome_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new StartPage());
-        }
+        private void BtnHome_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new StartPage());
 
-        private void BtnProducts_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new ProductsPage());
-        }
+        private void BtnProducts_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new ProductsPage());
 
-        private void BtnCart_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new CartPage());
-        }
+        private void BtnCart_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new CartPage());
 
-        private void BtnAccount_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AccountPage());
-        }
+        private void BtnAccount_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new AccountPage());
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
