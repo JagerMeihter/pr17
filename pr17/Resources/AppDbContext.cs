@@ -5,11 +5,10 @@ namespace pr17
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext() : base("name=PostgreConnection")
+        public AppDbContext() : base("name=SqlConnection")
         {
         }
 
-        // DbSets
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
@@ -28,19 +27,23 @@ namespace pr17
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<OrderItem>().ToTable("OrderItems");
 
-            // Настройка отношений
+            // === ИСПРАВЛЕНИЕ ЦИКЛИЧЕСКОЙ ССЫЛКИ ===
+
+            // Связь Client → Appointment
             modelBuilder.Entity<Appointment>()
                 .HasRequired(a => a.Client)
                 .WithMany(u => u.Appointments)
                 .HasForeignKey(a => a.ClientId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);   // Отключаем каскад
 
+            // Связь Master → Appointment
             modelBuilder.Entity<Appointment>()
                 .HasRequired(a => a.Master)
-                .WithMany()
+                .WithMany()                    // Мастер не имеет коллекции Appointments в модели
                 .HasForeignKey(a => a.MasterId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(false);   // Отключаем каскад
 
+            // Связь Client → Order
             modelBuilder.Entity<Order>()
                 .HasRequired(o => o.Client)
                 .WithMany(u => u.Orders)

@@ -11,8 +11,8 @@ namespace pr17
             InitializeComponent();
             NavigationService.MainFrame = MainFrame;
 
-            // Временно отключаем Seed, чтобы приложение запустилось
-            // AuthService.SeedTestUsers();
+            // Принудительно создаём тестовых пользователей при каждом запуске
+            AuthService.SeedTestUsers();
 
             MainFrame.Navigate(new StartPage());
 
