@@ -25,7 +25,7 @@ namespace pr17
             InitializeComponent();
         }
 
-        public void BtnRegister_Click(object sender, RoutedEventArgs e)
+        private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtLogin.Text) || string.IsNullOrWhiteSpace(txtPassword.Password))
             {
@@ -37,7 +37,7 @@ namespace pr17
             {
                 using (var db = new AppDbContext())
                 {
-                    if (db.Users.Any(u => u.Login == txtLogin.Text))
+                    if (db.Users.Any(u => u.Login == txtLogin.Text.Trim()))
                     {
                         MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
@@ -48,8 +48,8 @@ namespace pr17
                         FullName = txtFullName.Text.Trim(),
                         Phone = txtPhone.Text.Trim(),
                         Login = txtLogin.Text.Trim(),
-                        PasswordHash = AuthService.HashPassword(txtPassword.Password), // используем существующий метод
-                        Role = UserRole.Client,
+                        PasswordHash = AuthService.HashPassword(txtPassword.Password),
+                        Role = UserRole.Client,        // ←←← Важно: всегда Client
                         IsActive = true
                     };
 
@@ -59,7 +59,8 @@ namespace pr17
                     RegisteredLogin = newUser.Login;
                     RegisteredPassword = txtPassword.Password;
 
-                    MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Регистрация прошла успешно!\nВы автоматически вошли в систему.",
+                        "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     this.DialogResult = true;
                     this.Close();
@@ -67,7 +68,7 @@ namespace pr17
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка регистрации:\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка при регистрации:\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -35,6 +35,7 @@ namespace pr17
                 MessageBox.Show("Неверный логин или пароль!", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         public void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             var registerWin = new RegisterWindow();

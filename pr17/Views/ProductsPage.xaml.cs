@@ -96,6 +96,8 @@ namespace pr17
                 Margin = new Thickness(0, 5, 0, 10)
             });
 
+            // Внутри метода CreateProductCard, вместо старого btnAdd.Click += ...
+
             var btnAdd = new Button
             {
                 Content = "В корзину",
@@ -103,6 +105,11 @@ namespace pr17
                 Background = new SolidColorBrush(Color.FromRgb(39, 174, 96)),
                 Foreground = Brushes.White,
                 Margin = new Thickness(0, 8, 0, 0)
+            };
+
+            btnAdd.Click += (s, e) =>
+            {
+                AddToCartWithAuth(product);
             };
             btnAdd.Click += (s, e) =>
             {
@@ -161,6 +168,29 @@ namespace pr17
             );
 
             DisplayProducts(filtered);
+        }
+        private void AddToCartWithAuth(Product product)
+        {
+            if (AuthService.CurrentUser == null)
+            {
+                // Пользователь не авторизован → открываем окно входа
+                var loginWindow = new LoginWindow();
+
+                if (loginWindow.ShowDialog() == true && AuthService.CurrentUser != null)
+                {
+                    // После успешного входа добавляем товар
+                    CartService.Add(product);
+                    MessageBox.Show($"{product.Name} успешно добавлен в корзину!",
+                        "Добавлено в корзину", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                // Пользователь уже авторизован
+                CartService.Add(product);
+                MessageBox.Show($"{product.Name} успешно добавлен в корзину!",
+                    "Добавлено в корзину", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
