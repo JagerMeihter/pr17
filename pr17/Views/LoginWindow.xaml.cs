@@ -35,7 +35,19 @@ namespace pr17
                 MessageBox.Show("Неверный логин или пароль!", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        public void BtnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            var registerWin = new RegisterWindow();
+            if (registerWin.ShowDialog() == true)
+            {
+                // После успешной регистрации автоматически пытаемся войти
+                if (AuthService.Login(registerWin.RegisteredLogin, registerWin.RegisteredPassword))
+                {
+                    this.DialogResult = true;
+                    this.Close();
+                }
+            }
+        }
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

@@ -106,8 +106,25 @@ namespace pr17
             };
             btnAdd.Click += (s, e) =>
             {
-                CartService.Add(product);
-                MessageBox.Show($"{product.Name} добавлен в корзину!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (AuthService.CurrentUser == null)
+                {
+                    // Пользователь не авторизован → открываем окно входа
+                    var loginWin = new LoginWindow();
+
+                    // После закрытия окна логина проверяем, авторизовался ли пользователь
+                    if (loginWin.ShowDialog() == true && AuthService.CurrentUser != null)
+                    {
+                        // Если успешно вошёл — добавляем товар в корзину
+                        CartService.Add(product);
+                        MessageBox.Show($"{product.Name} добавлен в корзину!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                else
+                {
+                    // Пользователь уже авторизован
+                    CartService.Add(product);
+                    MessageBox.Show($"{product.Name} добавлен в корзину!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             };
 
             stack.Children.Add(btnAdd);

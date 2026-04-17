@@ -1,0 +1,45 @@
+﻿<Window x:Class="pr17.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация" 
+        Height="450" 
+        Width="420"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E2F">
+
+    <Grid Margin="30">
+        <StackPanel>
+            <TextBlock Text="Регистрация клиента" 
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       Foreground="#3498DB" 
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
+
+            <TextBlock Text="ФИО" Foreground="White" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtFullName" Height="35" Background="#2C3E50" Foreground="White"/>
+
+            <TextBlock Text="Телефон" Foreground="White" Margin="0,15,0,5"/>
+            <TextBox x:Name="txtPhone" Height="35" Background="#2C3E50" Foreground="White"/>
+
+            <TextBlock Text="Логин" Foreground="White" Margin="0,15,0,5"/>
+            <TextBox x:Name="txtLogin" Height="35" Background="#2C3E50" Foreground="White"/>
+
+            <TextBlock Text="Пароль" Foreground="White" Margin="0,15,0,5"/>
+            <PasswordBox x:Name="txtPassword" Height="35" Background="#2C3E50" Foreground="White"/>
+
+            <Button Content="Зарегистрироваться" 
+                    Height="45" 
+                    Margin="0,30,0,10" 
+                    Background="#27AE60" 
+                    Foreground="White"
+                    Click="BtnRegister_Click"/>
+
+            <Button Content="Отмена" 
+                    Height="35" 
+                    Background="#E74C3C" 
+                    Foreground="White"
+                    Click="BtnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

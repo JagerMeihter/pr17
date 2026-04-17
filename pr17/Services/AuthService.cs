@@ -62,7 +62,7 @@ namespace pr17
         /// <summary>
         /// Хэширование пароля с помощью SHA256
         /// </summary>
-        private static string HashPassword(string password)
+        public static string HashPassword(string password)
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
