@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace pr17
+namespace pr17.Converters
 {
     public class BoolToBrushConverter : IValueConverter
     {

@@ -33,16 +33,7 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-        <!-- Кнопка записи к мастеру -->
-        <Button Content="Записаться к мастеру" 
-                Height="55" 
-                Width="320" 
-                Margin="0,0,0,25"
-                Background="#3498DB" 
-                Foreground="White"
-                FontSize="17"
-                FontWeight="SemiBold"
-                Click="BtnBookAppointment_Click"/>
+        
         <!-- Вкладки -->
         <TabControl Grid.Row="1" Background="Transparent" BorderBrush="#34495E">
             <Button Content="Записаться к мастеру" 
@@ -55,6 +46,16 @@
                 FontWeight="SemiBold"
                 Click="BtnBookAppointment_Click"/>  
             <!-- Мои записи -->
+            <!-- Кнопка записи к мастеру -->
+            <Button Content="Записаться к мастеру" 
+                    Height="55" 
+                    Width="320" 
+                    Margin="0,0,0,25"
+                    Background="#3498DB" 
+                    Foreground="White"
+                    FontSize="17"
+                    FontWeight="SemiBold"
+                    Click="BtnBookAppointment_Click"/>
             <TabItem Header="Мои записи">
                 <ListView x:Name="lvAppointments" 
                           Background="Transparent" 

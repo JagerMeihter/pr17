@@ -11,7 +11,7 @@
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
             <TextBlock Text="Панель мастера" 
                        FontSize="28" 
                        FontWeight="Bold" 
@@ -20,21 +20,22 @@
             <TextBlock x:Name="txtMasterName" 
                        FontSize="18" 
                        Foreground="#AAAAAA"
-                       Margin="30,8,0,0"/>
+                       Margin="25,8,0,0"/>
         </StackPanel>
 
-        <!-- Список записей на мастера -->
+        <!-- Список записей мастера -->
         <ListView x:Name="lvMyAppointments" 
                   Grid.Row="1"
                   Background="Transparent" 
                   BorderBrush="#34495E"
-                  Foreground="White">
+                  Foreground="White"
+                  Margin="5">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="#2C3E50" 
-                            CornerRadius="8" 
-                            Padding="15" 
+                            CornerRadius="10" 
+                            Padding="16" 
                             Margin="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -44,27 +45,29 @@
 
                             <StackPanel>
                                 <TextBlock Text="{Binding Client.FullName}" 
-                                           FontSize="16" 
+                                           FontSize="17" 
                                            FontWeight="Bold"
                                            Foreground="White"/>
                                 <TextBlock Text="{Binding ServiceType.Name}" 
-                                           FontSize="15"
-                                           Foreground="#3498DB"/>
+                                           FontSize="16"
+                                           Foreground="#3498DB"
+                                           Margin="0,4,0,0"/>
                                 <TextBlock Text="{Binding DateTime, StringFormat='dd.MM.yyyy в HH:mm'}" 
                                            Foreground="#AAAAAA"/>
                                 <TextBlock Text="{Binding Comment}" 
                                            Foreground="#777777"
                                            TextWrapping="Wrap"
-                                           Margin="0,5,0,0"/>
+                                           Margin="0,8,0,0"/>
                             </StackPanel>
 
                             <Button Content="Завершить услугу" 
                                     Grid.Column="1"
-                                    Width="160"
-                                    Height="40"
+                                    Width="170"
+                                    Height="45"
+                                    VerticalAlignment="Center"
                                     Background="#27AE60"
                                     Foreground="White"
-                                    VerticalAlignment="Center"
+                                    FontSize="14"
                                     Click="BtnComplete_Click"
                                     Tag="{Binding}"/>
                         </Grid>
@@ -72,5 +75,14 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <!-- Если записей нет -->
+        <TextBlock x:Name="txtNoAppointments" 
+                   Text="У вас пока нет записей" 
+                   FontSize="18" 
+                   Foreground="#777777" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Visibility="Collapsed"/>
     </Grid>
 </Page>

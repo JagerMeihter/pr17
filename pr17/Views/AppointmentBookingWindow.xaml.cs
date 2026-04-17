@@ -34,8 +34,26 @@ namespace pr17
         {
             using (var db = new AppDbContext())
             {
-                var services = db.ServiceTypes.ToList();
-                cmbServices.ItemsSource = services;
+                // Если услуг нет — создаём тестовые
+                if (!db.ServiceTypes.Any())
+                {
+                    var services = new[]
+                    {
+                new ServiceType { Name = "Маникюр классический", BasePrice = 2500 },
+                new ServiceType { Name = "Маникюр с дизайном", BasePrice = 3500 },
+                new ServiceType { Name = "Педикюр", BasePrice = 2800 },
+                new ServiceType { Name = "Окрашивание волос", BasePrice = 4500 },
+                new ServiceType { Name = "Стрижка", BasePrice = 1800 },
+                new ServiceType { Name = "Ламинирование ресниц", BasePrice = 2200 },
+                new ServiceType { Name = "Уход за лицом", BasePrice = 3200 }
+            };
+
+                    db.ServiceTypes.AddRange(services);
+                    db.SaveChanges();
+                }
+
+                var serviceList = db.ServiceTypes.ToList();
+                cmbServices.ItemsSource = serviceList;
                 cmbServices.DisplayMemberPath = "Name";
             }
         }

@@ -1,8 +1,9 @@
-﻿using pr17.Services;
+﻿using pr17.Models;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using pr17.Models;
+
 namespace pr17
 {
     public partial class MasterPage : Page
@@ -28,47 +29,54 @@ namespace pr17
 
             if (AuthService.CurrentUser == null) return;
 
-            // Тестовые записи для мастера
-            var testAppointments = new[]
+            using (var db = new AppDbContext())
             {
-                new
-                {
-                    Id = 101,
-                    Client = new User { FullName = "Трубоёб ВАСИЛИЙ" },
-                    ServiceType = new ServiceType { Name = "Маникюр классический" },
-                    DateTime = DateTime.Now.AddHours(3),
-                    Comment = "гителр цциагур91122 семь восемь семь шесть шесть семь ",
-                    Status = AppointmentStatus.Scheduled
-                },
-                new
-                {
-                    Id = 102,
-                    Client = new User { FullName = "Хуяковна Хераковна" },
-                    ServiceType = new ServiceType { Name = "Окрашивание волос (на попе)" },
-                    DateTime = DateTime.Now.AddHours(6),
-                    Comment = "",
-                    Status = AppointmentStatus.Scheduled
-                }
-            };
+                var myAppointments = db.Appointments
+                    .Where(a => a.MasterId == AuthService.CurrentUser.Id)
+                    .OrderBy(a => a.DateTime)
+                    .ToList();
 
-            foreach (var appointment in testAppointments)
-            {
-                lvMyAppointments.Items.Add(appointment);
+                if (myAppointments.Count == 0)
+                {
+                    txtNoAppointments.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                txtNoAppointments.Visibility = Visibility.Collapsed;
+
+                foreach (var app in myAppointments)
+                {
+                    lvMyAppointments.Items.Add(app);
+                }
             }
         }
 
         private void BtnComplete_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag != null)
+            if (sender is Button btn && btn.Tag is Appointment appointment)
             {
-                // Здесь в будущем будет обновление статуса записи
-                MessageBox.Show("Услуга успешно завершена!\nСтатус записи обновлён.",
-                    "Выполнено",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                try
+                {
+                    using (var db = new AppDbContext())
+                    {
+                        var record = db.Appointments.Find(appointment.Id);
+                        if (record != null)
+                        {
+                            record.Status = AppointmentStatus.Completed;
+                            db.SaveChanges();
+                        }
+                    }
 
-                // Перезагружаем список
-                LoadMyAppointments();
+                    MessageBox.Show("Услуга успешно завершена!", "Выполнено",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    LoadMyAppointments(); // обновляем список
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при завершении услуги:\n{ex.Message}",
+                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }
