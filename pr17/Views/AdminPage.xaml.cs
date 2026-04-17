@@ -1,8 +1,8 @@
-﻿using pr17.Services;
-using System;
+﻿using pr17.Models;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using pr17.Models;
+
 namespace pr17
 {
     public partial class AdminPage : Page
@@ -10,57 +10,20 @@ namespace pr17
         public AdminPage()
         {
             InitializeComponent();
-            LoadUsers();
+            LoadAllUsers();
         }
 
-        private void LoadUsers()
+        private void LoadAllUsers()
         {
             lvUsers.Items.Clear();
 
-            // Тестовые пользователи
-            var testUsers = new[]
+            using (var db = new AppDbContext())
             {
-                new User
+                var users = db.Users.ToList();
+                foreach (var user in users)
                 {
-                    Id = 1,
-                    FullName = "Администратор",
-                    Login = "admin",
-                    Phone = "+7 (999) 123-45-67",
-                    Role = UserRole.Administrator,
-                    IsActive = true
-                },
-                new User
-                {
-                    Id = 2,
-                    FullName = "Трубоёб ВАСИЛИЙ",
-                    Login = "master",
-                    Phone = "+7 (999) 111-22-33",
-                    Role = UserRole.Master,
-                    IsActive = true
-                },
-                new User
-                {
-                    Id = 3,
-                    FullName = "Дрель ВИТАЛЯ",
-                    Login = "client",
-                    Phone = "+7 (999) 555-66-77",
-                    Role = UserRole.Client,
-                    IsActive = true
-                },
-                new User
-                {
-                    Id = 4,
-                    FullName = "Гитлер Гитлер",
-                    Login = "manager",
-                    Phone = "+7 (999) 777-88-99",
-                    Role = UserRole.Manager,
-                    IsActive = false
+                    lvUsers.Items.Add(user);
                 }
-            };
-
-            foreach (var user in testUsers)
-            {
-                lvUsers.Items.Add(user);
             }
         }
 
@@ -68,10 +31,18 @@ namespace pr17
         {
             if (sender is Button btn && btn.Tag is User user)
             {
-                MessageBox.Show($"Изменение роли пользователя:\n{user.FullName}\n\n" +
-                               $"Текущая роль: {user.Role}\n\n" +
-                               "Функция смены роли будет доступна после подключения базы данных.",
-                    "Смена роли", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Простое переключение роли для теста (в будущем можно сделать выбор)
+                user.Role = user.Role == UserRole.Client ? UserRole.Master : UserRole.Client;
+
+                using (var db = new AppDbContext())
+                {
+                    var u = db.Users.Find(user.Id);
+                    if (u != null) u.Role = user.Role;
+                    db.SaveChanges();
+                }
+
+                LoadAllUsers();
+                MessageBox.Show($"Роль пользователя {user.FullName} изменена.", "Успех");
             }
         }
 
@@ -79,9 +50,17 @@ namespace pr17
         {
             if (sender is Button btn && btn.Tag is User user)
             {
-                string action = user.IsActive ? "заморожен" : "разморожен";
-                MessageBox.Show($"Пользователь {user.FullName} успешно {action}.",
-                    "Статус пользователя", MessageBoxButton.OK, MessageBoxImage.Information);
+                user.IsActive = !user.IsActive;
+
+                using (var db = new AppDbContext())
+                {
+                    var u = db.Users.Find(user.Id);
+                    if (u != null) u.IsActive = user.IsActive;
+                    db.SaveChanges();
+                }
+
+                LoadAllUsers();
+                MessageBox.Show($"Пользователь {user.FullName} {(user.IsActive ? "разморожен" : "заморожен")}.");
             }
         }
     }

@@ -121,6 +121,7 @@
     <Compile Include="CheckoutWindow.xaml.cs">
       <DependentUpon>CheckoutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToBrushConverter.cs" />
     <Compile Include="Converters\DiscountConverter.cs" />
     <Compile Include="Resources\AppDbContext.cs" />
     <Compile Include="Services\AuthService.cs" />

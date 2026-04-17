@@ -49,7 +49,21 @@ namespace pr17
                 lvAppointments.Items.Add(app);
             }
         }
+        private void BtnBookAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (AuthService.CurrentUser == null || AuthService.CurrentUser.Role != UserRole.Client)
+            {
+                MessageBox.Show("Записаться к мастеру могут только клиенты.", "Доступ ограничен",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
+            var bookingWindow = new AppointmentBookingWindow();
+            bookingWindow.ShowDialog();
+
+            // После закрытия окна можно обновить список записей клиента
+            LoadAppointments();
+        }
         private void LoadOrders()
         {
             lvOrders.Items.Clear();

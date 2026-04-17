@@ -1,12 +1,89 @@
-﻿<Window x:Class="pr17.Views.AppointmentBookingWindow"
+﻿<Window x:Class="pr17.AppointmentBookingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:pr17.Views"
-        mc:Ignorable="d"
-        Title="AppointmentBookingWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Запись к мастеру" 
+        Height="650" 
+        Width="520"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E2F"
+        ResizeMode="NoResize">
+
+    <Grid Margin="35">
+        <StackPanel>
+            <TextBlock Text="Запись к мастеру" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="#3498DB" 
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,35"/>
+
+            <!-- Мастер -->
+            <TextBlock Text="Мастер" Foreground="#E0E0E0" FontSize="15" Margin="0,0,0,8"/>
+            <ComboBox x:Name="cmbMasters" 
+                      Height="48" 
+                      Background="#2C3E50" 
+                      Foreground="White" 
+                      FontSize="15"
+                      Margin="0,0,0,25"/>
+
+            <!-- Услуга -->
+            <TextBlock Text="Услуга" Foreground="#E0E0E0" FontSize="15" Margin="0,0,0,8"/>
+            <ComboBox x:Name="cmbServices" 
+                      Height="48" 
+                      Background="#2C3E50" 
+                      Foreground="White" 
+                      FontSize="15"
+                      Margin="0,0,0,30"/>
+
+            <!-- Дата -->
+            <TextBlock Text="Дата записи" Foreground="#E0E0E0" FontSize="15" Margin="0,0,0,8"/>
+            <DatePicker x:Name="datePicker" 
+                        Height="48" 
+                        Background="#2C3E50" 
+                        Foreground="White"
+                        Margin="0,0,0,20"/>
+
+            <!-- Время -->
+            <TextBlock Text="Время" Foreground="#E0E0E0" FontSize="15" Margin="0,0,0,8"/>
+            <ComboBox x:Name="cmbTime" 
+                      Height="48" 
+                      Background="#2C3E50" 
+                      Foreground="White" 
+                      FontSize="15"
+                      Margin="0,0,0,30"/>
+
+            <!-- Комментарий -->
+            <TextBlock Text="Комментарий (необязательно)" Foreground="#E0E0E0" FontSize="15" Margin="0,0,0,8"/>
+            <TextBox x:Name="txtComment" 
+                     Height="90" 
+                     Background="#2C3E50" 
+                     Foreground="White" 
+                     TextWrapping="Wrap" 
+                     AcceptsReturn="True" 
+                     VerticalContentAlignment="Top"
+                     Padding="12"/>
+
+            <!-- Кнопки -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                <Button Content="Отмена" 
+                        Width="150" 
+                        Height="52" 
+                        Margin="10"
+                        Background="#E74C3C" 
+                        Foreground="White"
+                        FontSize="15"
+                        Click="BtnCancel_Click"/>
+
+                <Button Content="Подтвердить запись" 
+                        Width="230" 
+                        Height="52" 
+                        Margin="10"
+                        Background="#27AE60" 
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Click="BtnBook_Click"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
