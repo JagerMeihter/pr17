@@ -16,7 +16,7 @@ namespace pr17.Models
     public enum PaymentMethod { Cash, Card }
 
     [Table("Users")]
-    public class User
+    public partial class User
     {
         [Key]
         public int Id { get; set; }
