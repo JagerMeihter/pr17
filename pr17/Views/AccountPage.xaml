@@ -33,10 +33,18 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-
+        
         <!-- Вкладки -->
         <TabControl Grid.Row="1" Background="Transparent" BorderBrush="#34495E">
-
+            <Button Content="Записаться к мастеру" 
+                Height="50" 
+                Width="280" 
+                Margin="0,0,0,20"
+                Background="#3498DB" 
+                Foreground="White"
+                FontSize="16"
+                FontWeight="SemiBold"
+                Click="BtnBookAppointment_Click"/>  
             <!-- Мои записи -->
             <TabItem Header="Мои записи">
                 <ListView x:Name="lvAppointments" 
